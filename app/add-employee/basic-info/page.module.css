@@ -1,0 +1,7 @@
+.root {
+   background-color: #c92a2a;
+}
+
+.root:hover {
+   background-color: #e03131;
+}
