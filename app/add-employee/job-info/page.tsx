@@ -56,7 +56,7 @@ export default function Page() {
 
    return (
       <section>
-         <div className="max-w-4xl mx-auto bg-white rounded-lg mt-4 md:mt-14 shadow p-10">
+         <div className="max-w-4xl mx-auto bg-white rounded-lg mt-4 md:mt-14 md:shadow p-10">
             <SectionHeader title="Job Information" />
             <form
                onSubmit={sumitHandler}
