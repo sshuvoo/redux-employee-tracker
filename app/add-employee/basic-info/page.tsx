@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { draftEmployee } from '@/redux/features/employeeSlice';
 import { useRouter } from 'next/navigation';
+import isValidEmail from '@/utilities/isValidEmail';
+import { notifications } from '@mantine/notifications';
 
 export default function Page() {
    const { newEmployee } = useSelector((state: any) => state.employee);
@@ -30,11 +32,24 @@ export default function Page() {
       else setFirstNameErr(true);
       if (lastName) setLastNameErr(false);
       else setLastNameErr(true);
-      if (email) setEmailErr(false);
-      else setEmailErr(true);
+      if (email && isValidEmail(email.toLowerCase())) setEmailErr(false);
+      else {
+         setEmailErr(true);
+         notifications.show({
+            color: 'red',
+            title: 'Invalid Email',
+            message: 'Please Enter a valid Email',
+         });
+      }
       if (phone) setPhoneErr(false);
       else setPhoneErr(true);
-      if (firstName && lastName && email && phone) {
+      if (
+         firstName &&
+         lastName &&
+         email &&
+         isValidEmail(email.toLowerCase()) &&
+         phone
+      ) {
          dispatch(
             draftEmployee({
                firstName,
@@ -108,7 +123,10 @@ export default function Page() {
                      error={phoneErr}
                      placeholder="Enter Your Phone"
                      value={phone}
-                     onChange={(event) => setPhone(event.currentTarget.value)}
+                     onChange={(event) => {
+                        if (!isNaN(Number(event.currentTarget.value)))
+                           setPhone(event.currentTarget.value);
+                     }}
                   />
                </div>
                <div>

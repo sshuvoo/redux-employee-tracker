@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const employeeList = JSON.parse(localStorage.getItem('employeeList') || '[]');
+interface InitialState {
+   employeeList: any;
+   newEmployee: any;
+   isLoading: boolean;
+}
 
-const initialState = {
-   employeeList,
+const initialState: InitialState = {
+   employeeList: [],
    newEmployee: {},
+   isLoading: true,
 };
 
 const employeeSlice = createSlice({
@@ -13,6 +18,10 @@ const employeeSlice = createSlice({
    reducers: {
       draftEmployee: (state, { payload }) => {
          state.newEmployee = { ...state.newEmployee, ...payload };
+      },
+      loadEmployee: (state, { payload }) => {
+         state.employeeList = payload;
+         state.isLoading = false;
       },
       clearDraftEmployee: (state) => {
          state.newEmployee = {};
@@ -47,5 +56,6 @@ export const {
    saveEmployee,
    clearDraftEmployee,
    deleteEmployee,
+   loadEmployee,
 } = employeeSlice.actions;
 export default employeeSlice.reducer;

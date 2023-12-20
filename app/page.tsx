@@ -1,12 +1,24 @@
 'use client';
 import EmployeeCard from '@/components/EmployeeCard';
 import JobHolderCard from '@/components/JobHolderCard';
+import { loadEmployee } from '@/redux/features/employeeSlice';
 import { Button } from '@mantine/core';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Home() {
-   const { employeeList } = useSelector((state: any) => state.employee);
+   const { employeeList, isLoading } = useSelector(
+      (state: any) => state.employee
+   );
+   const dispatch = useDispatch();
+
+   useEffect(() => {
+      const localemployeeList = localStorage.getItem('employeeList');
+      if (localemployeeList)
+         dispatch(loadEmployee(JSON.parse(localemployeeList)));
+      else dispatch(loadEmployee([]));
+   }, [dispatch]);
 
    return (
       <section>
@@ -43,8 +55,10 @@ export default function Home() {
             )}
             {employeeList?.length <= 0 && (
                <div className="p-8">
-                  <p className="text-center text-2xl font-semibold">
-                     No Employee Found! Please Add First
+                  <p className="text-center text-lg sm:text-xl md:text-2xl font-semibold">
+                     {isLoading
+                        ? 'Loading...'
+                        : 'No Employee Found! Please Add First'}
                   </p>
                </div>
             )}

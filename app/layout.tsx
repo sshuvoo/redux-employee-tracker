@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
+import { Notifications } from '@mantine/notifications';
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import ReduxProvider from '@/redux/ReduxProvider';
 
@@ -21,7 +23,10 @@ export default function RootLayout({
                <ColorSchemeScript />
             </head>
             <body className="bg-gray-200">
-               <MantineProvider>{children}</MantineProvider>
+               <MantineProvider>
+                  {children}
+                  <Notifications />
+               </MantineProvider>
             </body>
          </html>
       </ReduxProvider>

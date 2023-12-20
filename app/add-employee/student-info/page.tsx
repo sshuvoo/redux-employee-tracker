@@ -3,13 +3,14 @@ import { Input, Button } from '@mantine/core';
 import Link from 'next/link';
 import classes from './page.module.css';
 import SectionHeader from '@/components/SectionHeader';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
    clearDraftEmployee,
    saveEmployee,
 } from '@/redux/features/employeeSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { notifications } from '@mantine/notifications';
 
 export default function Page() {
    const { newEmployee } = useSelector((state: any) => state.employee);
@@ -52,8 +53,16 @@ export default function Page() {
          );
          dispatch(clearDraftEmployee());
          router.push('/');
+         notifications.show({
+            title: 'Add Request',
+            message: 'Employee added succefully 🤥',
+         });
       }
    };
+
+   useEffect(() => {
+      if (!newEmployee.firstName) router.push('/');
+   }, [newEmployee, router]);
 
    return (
       <section>

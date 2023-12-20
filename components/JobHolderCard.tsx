@@ -1,6 +1,7 @@
 import { deleteEmployee } from '@/redux/features/employeeSlice';
 import { Avatar } from '@mantine/core';
 import { useDispatch } from 'react-redux';
+import { notifications } from '@mantine/notifications';
 
 export default function JobHolderCard({ info }: { info: any }) {
    const dispatch = useDispatch();
@@ -26,7 +27,13 @@ export default function JobHolderCard({ info }: { info: any }) {
             </div>
             <div className="flex justify-end">
                <svg
-                  onClick={() => dispatch(deleteEmployee(id))}
+                  onClick={() => {
+                     dispatch(deleteEmployee(id));
+                     notifications.show({
+                        title: 'Delete',
+                        message: 'Employee removed succefully 🤥',
+                     });
+                  }}
                   className="fill-rose-500 cursor-pointer"
                   xmlns="http://www.w3.org/2000/svg"
                   height="16"
