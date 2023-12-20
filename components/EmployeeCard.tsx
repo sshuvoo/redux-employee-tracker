@@ -33,7 +33,7 @@ export default function EmployeeCard({ info }: { info: any }) {
                      dispatch(deleteEmployee(id));
                      notifications.show({
                         title: 'Delete',
-                        message: 'Employee removed succefully 🤥',
+                        message: `${firstName} ${lastName} removed succefully 🤥`,
                      });
                   }}
                   className="fill-rose-500 cursor-pointer"

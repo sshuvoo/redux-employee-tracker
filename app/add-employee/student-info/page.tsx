@@ -132,7 +132,11 @@ export default function Page() {
                         <span className="ml-2">Back</span>
                      </Button>
                   </Link>
-                  <Button type="submit" variant="filled">
+                  <Button
+                     classNames={{ root: classes.next }}
+                     type="submit"
+                     variant="filled"
+                  >
                      <span className="mr-2">Submit</span>
                      <svg
                         className="fill-white"

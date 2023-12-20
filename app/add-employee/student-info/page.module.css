@@ -5,3 +5,11 @@
 .root:hover {
    background-color: #e03131;
 }
+
+.next {
+   background-color: #228be6;
+}
+
+.next:hover {
+   background-color: #1c7ed6;
+}

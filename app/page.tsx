@@ -6,6 +6,7 @@ import { Button } from '@mantine/core';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import classes from './page.module.css';
 
 export default function Home() {
    const { employeeList, isLoading } = useSelector(
@@ -25,7 +26,7 @@ export default function Home() {
          <div className="max-w-4xl mx-auto bg-white rounded-lg mt-14 shadow">
             <div className="flex justify-end p-10">
                <Link href={'/add-employee/basic-info'}>
-                  <Button variant="filled">
+                  <Button classNames={{ root: classes.root }} variant="filled">
                      <svg
                         className="fill-white"
                         xmlns="http://www.w3.org/2000/svg"

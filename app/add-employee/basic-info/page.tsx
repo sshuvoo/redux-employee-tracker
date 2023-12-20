@@ -11,7 +11,9 @@ import isValidEmail from '@/utilities/isValidEmail';
 import { notifications } from '@mantine/notifications';
 
 export default function Page() {
-   const { newEmployee } = useSelector((state: any) => state.employee);
+   const { newEmployee, employeeList } = useSelector(
+      (state: any) => state.employee
+   );
    const dispatch = useDispatch();
    const router = useRouter();
    const [firstName, setFirstName] = useState<string>('');
@@ -32,8 +34,21 @@ export default function Page() {
       else setFirstNameErr(true);
       if (lastName) setLastNameErr(false);
       else setLastNameErr(true);
-      if (email && isValidEmail(email.toLowerCase())) setEmailErr(false);
-      else {
+      if (email && isValidEmail(email.toLowerCase())) {
+         if (employeeList?.length <= 0) {
+            setEmailErr(false);
+         } else if (
+            employeeList.some(
+               (employee: any) => employee.email === email.toLowerCase()
+            )
+         ) {
+            notifications.show({
+               color: 'red',
+               title: 'E-mail Already Exist',
+               message: 'Try a diffrent E-mail',
+            });
+         }
+      } else {
          setEmailErr(true);
          notifications.show({
             color: 'red',
@@ -50,20 +65,27 @@ export default function Page() {
          isValidEmail(email.toLowerCase()) &&
          phone
       ) {
-         dispatch(
-            draftEmployee({
-               firstName,
-               lastName,
-               email,
-               phone,
-               stack,
-               profession,
-            })
-         );
-         if (profession === 'Student')
-            router.push('/add-employee/student-info');
-         else if (profession === 'Job Holder')
-            router.push('/add-employee/job-info');
+         if (
+            employeeList?.length <= 0 ||
+            !employeeList.some(
+               (employee: any) => employee.email === email.toLowerCase()
+            )
+         ) {
+            dispatch(
+               draftEmployee({
+                  firstName,
+                  lastName,
+                  email,
+                  phone,
+                  stack,
+                  profession,
+               })
+            );
+            if (profession === 'Student')
+               router.push('/add-employee/student-info');
+            else if (profession === 'Job Holder')
+               router.push('/add-employee/job-info');
+         }
       }
    };
 
@@ -167,7 +189,11 @@ export default function Page() {
                         <span className="ml-2">Back</span>
                      </Button>
                   </Link>
-                  <Button type="submit" variant="filled">
+                  <Button
+                     classNames={{ root: classes.next }}
+                     type="submit"
+                     variant="filled"
+                  >
                      <span className="mr-2">Next</span>
                      <svg
                         className="fill-white"
