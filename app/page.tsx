@@ -23,7 +23,7 @@ export default function Home() {
 
    return (
       <section>
-         <div className="max-w-4xl mx-auto bg-white rounded-lg mt-14 shadow">
+         <div className="max-w-4xl mx-auto bg-white rounded-lg mt-4 md:mt-14 shadow">
             <div className="flex justify-end p-10">
                <Link href={'/add-employee/basic-info'}>
                   <Button classNames={{ root: classes.root }} variant="filled">
